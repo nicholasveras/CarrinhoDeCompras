@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, FlatList } from 'react-native';
 
 import { Feather } from '@expo/vector-icons'
+import Product from '../../components/Product'
+import {useNavigation} from '@react-navigation/native'
 
 export default function Home() {
+
+  const navigation = useNavigation();
   const [products, setProducts] = useState([
     {
       id: '1',
@@ -52,14 +56,26 @@ export default function Home() {
       <View style={styles.cartContent}>
         <Text style={styles.title}>Lista de produtos</Text>
 
-        <TouchableOpacity style={styles.cartButton}>
+        <TouchableOpacity 
+        style={styles.cartButton}
+        onPress={() => navigation.navigate("Cart")}
+        >
           <View style={styles.dot}>
             <Text style={styles.dotText}>3</Text>
           </View>
           <Feather name='shopping-cart' size={30} color='black' />
         </TouchableOpacity>
-
       </View>
+
+      <FlatList
+      style={styles.list}
+      data={products}
+      keyExtractor={(item) => String(item.id)}
+      renderItem={({item}) => <Product data={item}/> }
+      />
+
+
+
     </SafeAreaView>
   )
 }
@@ -85,7 +101,7 @@ const styles = StyleSheet.create({
   dot: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'red',
+    backgroundColor: '#168fff',
     width: 20,
     height: 20,
     borderRadius: 12,
