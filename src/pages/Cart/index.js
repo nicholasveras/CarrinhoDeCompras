@@ -15,6 +15,7 @@ export default function Cart() {
             renderItem={({item}) => (
                 <CardItem
                 data={item}
+                addAmount={() => addItemCart(item)}
                 />
             )}
             />
